@@ -4,11 +4,11 @@ const bcrypt = require('bcrypt'),
     SALT_WORK_FACTOR = 10;
 
 let userSchema = new Schema({
-  name: String,
-  password: String,
-  email: String,
-  image: Object
-}, { versionKey: false });
+  name : String,
+  password : String,
+  email : String,
+  image : Object,
+ }, { versionKey: false });
 
 userSchema.pre('save', function (next) {
   var user = this;
