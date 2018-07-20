@@ -7,6 +7,7 @@ const upload = multer({ dest: '../public/uploads/' });
 
 let user = new User();
 let article = new Article();
+
 router.post('/insert', user.insertUser); //create(register)
 
 router.post('/login', user.loginUser);  //login
