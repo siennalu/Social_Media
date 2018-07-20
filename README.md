@@ -42,9 +42,20 @@
   
   •	URL:http://localhost:3000/upload
     
-  •	Body(form-):
+  •	Body(form-data):
   
     o name: test
     o password: test123
     o img: 選擇欲上傳的檔案
  
+ ## API測試(5)-發送貼文
+  •	HTTP Method: POST
+  
+  •	URL:http://localhost:3000/article
+    
+  •	Body(form-data):
+  
+    o title: test
+    o category: test
+    o content: test123
+    o images: 選擇欲上傳的檔案
