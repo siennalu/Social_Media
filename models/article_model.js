@@ -2,20 +2,18 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let articleSchema = new Schema({
+  Author: String,
   Title: String,
   Category: String,
-  Content: String,
-  Images: Object,
-  Date: String,
-  Location : { type: {type:String}, coordinates: [Number]},
+  Content: Array,
   Likes: Number,
   LikesPeople: String,
   CommentPerson: String,
   CommentContent: String,
-  CommentTime: String
+  CommentTime: String,
+  Delete: Boolean
 }, { versionKey: false });
 
-//articleSchema.index({loc: '2dsphere'});
 
 let article_schema = mongoose.model('Article', articleSchema);
 
