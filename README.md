@@ -70,7 +70,25 @@
     o articleID: 複製發送貼文中的文章ID
     o content: test456
   
-  ## API測試(7)-刪除貼文
+  ## API測試(7)-查詢全部貼文
+  •	HTTP Method: GET
+  
+  •	URL:http://localhost:3000/search_article
+    
+  •	Body(form-data):
+  
+    o name: test
+    
+  ## API測試(8)-透過ID查詢貼文
+  •	HTTP Method: POST
+  
+  •	URL:http://localhost:3000/search_articleByID
+    
+  •	Body(form-data):
+  
+    o articleID: 複製發送貼文中的文章ID
+    
+  ## API測試(9)-刪除貼文
   •	HTTP Method: PUT
   
   •	URL:http://localhost:3000/delete_article
@@ -78,5 +96,4 @@
   •	Body(form-data):
   
     o articleID: 複製發送貼文中的文章ID
-    
     
