@@ -14,7 +14,6 @@ let articleSchema = new Schema({
   Delete: Boolean
 }, { versionKey: false });
 
-
 let article_schema = mongoose.model('Article', articleSchema);
 
 module.exports = article_schema;

@@ -3,7 +3,6 @@ const router = express.Router();
 const User = require('../controllers/users_controller');
 const Article = require('../controllers/article_controller');
 
-
 let user = new User();
 let article = new Article();
 
