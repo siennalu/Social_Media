@@ -24,7 +24,7 @@
 ## API測試(3)-修改
   •	HTTP Method: PUT
   
-  •	URL:http://localhost:3000/update
+  •	URL:http://localhost:3000/update_user
   
   •	Headers:
   
