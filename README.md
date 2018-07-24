@@ -45,6 +45,7 @@
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o title: test
     o name: test
     o category: testing
@@ -57,6 +58,7 @@
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o articleID: 複製發送貼文中的文章ID
     o content: test456
   
@@ -67,6 +69,7 @@
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o name: test
     
   ## API測試(7)-透過ID查詢貼文
@@ -76,6 +79,7 @@
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o articleID: 複製發送貼文中的文章ID
     
   ## API測試(8)-刪除貼文
@@ -85,5 +89,6 @@
     
   •	Body(form-data):
   
-    o articleID: 複製發送貼文中的文章ID
+   o authorID: 發文人的ID
+   o articleID: 複製發送貼文中的文章ID
     
