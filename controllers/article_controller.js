@@ -6,7 +6,7 @@ module.exports = class Article {
     let contentForObject = {};
     let article = new articleSchemaModel({
       author: req.body.name,
-      authorID: req.body.author_id,
+      authorID: req.body.authorID,
       title: req.body.title,
       category: req.body.category,
       listOfContent: [onTime(), req.body.content],
