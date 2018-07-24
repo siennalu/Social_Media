@@ -17,7 +17,6 @@
   
   •	Body(x-www-form-urlencoded):
   
-    o name: test
     o password: test 
     o email: test@gmail.com
     
