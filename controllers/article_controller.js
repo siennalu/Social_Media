@@ -2,8 +2,8 @@ const articleSchemaModel = require('../models/article_model.js');
 
 module.exports = class Article {
   postArticle(req, res, next) {
-    let ContentForArray = [];
-    let ContentForObject = {};
+    let contentForArray = [];
+    let contentForObject = {};
     let article = new articleSchemaModel({
       author: req.body.name,
       authorID: req.body.author_id,
@@ -12,10 +12,10 @@ module.exports = class Article {
       listOfContent: [onTime(), req.body.content],
       delete: false
     });
-    ContentForObject.time = onTime();
-    ContentForObject.content = req.body.content;
-    ContentForArray.push(ContentForObject);
-    article.listOfContent = ContentForArray;
+    contentForObject.time = onTime();
+    contentForObject.content = req.body.content;
+    contentForArray.push(ContentForObject);
+    article.listOfContent = contentForArray;
     article.save()
       .then(posts => {
         let result = {
