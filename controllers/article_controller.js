@@ -26,26 +26,33 @@ module.exports = class Article {
       })
       .catch(error => res.json(error));
   }
+
   updateArticle(req, res, next) {
     let updateObj = {};
     updateObj.time = onTime();
     updateObj.content = req.body.content;
-    articleSchemaModel.findOne({ _id: req.body.articleID})
+    articleSchemaModel.findOne({_id: req.body.articleID})
       .then(doc => {
         doc.listOfContent.push(updateObj);
-        doc.save().then(value => res.json(value));
-      })
-      .catch(error => {
+        doc.save().then(value => {
           let result = {
-            status: "發文更新失敗",
-            err: "伺服器錯誤，請稍後再試"
+            status: "發文修改成功",
+            content: value
           }
-          res.json(error)
-       })
+          res.json(result);
+        })
+          .catch(error => {
+            let result = {
+              status: "發文修改失敗",
+              err: "伺服器錯誤，請稍後再試"
+            }
+            res.json(error)
+          })
+      })
   }
 
   searchArticle(req, res, next) {
-    articleSchemaModel.find({ delete: false })
+    articleSchemaModel.find({delete: false})
       .then(value => {
         res.json(value)
       })
@@ -53,7 +60,7 @@ module.exports = class Article {
   }
 
   searchArticleByID(req, res, next) {
-    articleSchemaModel.findOne({ _id: req.body.articleID })
+    articleSchemaModel.findOne({_id: req.body.articleID})
       .then(value => {
         res.json(value)
       })
@@ -61,17 +68,23 @@ module.exports = class Article {
   }
 
   deleteArticle(req, res, next) {
-    articleSchemaModel.findOne({ _id: req.body.articleID})
+    articleSchemaModel.findOne({_id: req.body.articleID})
       .then(doc => {
         doc.delete = true;
-        doc.save().then(value => res.json(value));
-      })
-      .catch(error => {
-        let result = {
-          status: "刪除失敗",
-          err: "伺服器錯誤，請稍後再試"
-        }
-        res.json(error)
+        doc.save().then(value => {
+          let result = {
+            status: "刪除成功",
+            content: value
+          }
+          res.json(result);
+        })
+          .catch(error => {
+            let result = {
+              status: "刪除失敗",
+              err: "伺服器錯誤，請稍後再試"
+            }
+            res.json(error)
+          })
       })
   }
 }
