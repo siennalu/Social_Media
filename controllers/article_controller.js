@@ -4,15 +4,16 @@ module.exports = class Article {
   postArticle(req, res, next) {
     let contentForArray = [];
     let contentForObject = {};
+    let seconds = Math.round(Date.now() / 1000);
     let article = new articleSchemaModel({
       author: req.body.name,
       authorID: req.body.authorID,
       title: req.body.title,
       category: req.body.category,
-      listOfContent: [onTime(), req.body.content],
+      listOfContent: [seconds, req.body.content],
       delete: false
     });
-    contentForObject.time = onTime();
+    contentForObject.time = seconds;
     contentForObject.content = req.body.content;
     contentForArray.push(contentForObject);
     article.listOfContent = contentForArray;
@@ -29,7 +30,8 @@ module.exports = class Article {
 
   updateArticle(req, res, next) {
     let updateObj = {};
-    updateObj.time = onTime();
+    var seconds = Math.round(Date.now() / 1000);
+    updateObj.time = seconds;
     updateObj.content = req.body.content;
     articleSchemaModel.findOne({_id: req.body.articleID})
       .then(doc => {
@@ -53,6 +55,7 @@ module.exports = class Article {
 
   searchArticle(req, res, next) {
     articleSchemaModel.find({delete: false})
+
       .then(value => {
         res.json(value)
       })
@@ -113,21 +116,5 @@ module.exports = class Article {
   }
 }
 
-//取得現在時間
-const onTime = () => {
-  const date = new Date();
-  const mm = date.getMonth() + 1;
-  const dd = date.getDate();
-  const hh = date.getHours();
-  const mi = date.getMinutes();
-  const ss = date.getSeconds();
 
-  return [date.getFullYear(), "-" +
-  (mm > 9 ? '' : '0') + mm, "-" +
-  (dd > 9 ? '' : '0') + dd, " " +
-  (hh > 9 ? '' : '0') + hh, ":" +
-  (mi > 9 ? '' : '0') + mi, ":" +
-  (ss > 9 ? '' : '0') + ss
-  ].join('')
-}
 
