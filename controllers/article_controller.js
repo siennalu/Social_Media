@@ -87,6 +87,30 @@ module.exports = class Article {
           })
       })
   }
+
+  likesArticle(req, res, next) {
+    //likes.push(req.body.authorID)
+    console.log(req.body.authorID);
+    articleSchemaModel.findOne({authorID: req.body.authorID})
+      .then(doc => {
+        doc.likes.push(req.body.authorID);
+        doc.numberOfLikes = doc.likes.length;
+        doc.save().then(value => {
+          let result = {
+            status: "已按讚",
+            content: value
+          }
+          res.json(result);
+        })
+          .catch(error => {
+            let result = {
+              status: "按讚失敗",
+              err: "伺服器錯誤，請稍後再試"
+            }
+            res.json(error)
+          })
+      })
+  }
 }
 
 //取得現在時間

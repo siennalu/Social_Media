@@ -24,5 +24,7 @@ router.post('/search_articleByID', article.searchArticleByID); //get the article
 
 router.put('/delete_article', article.deleteArticle); //delete
 
+router.post('/likes_article', article.likesArticle); //likes
+
 
 module.exports = router;

@@ -8,6 +8,7 @@ let articleSchema = new Schema({
   category: String,
   listOfContent: Array,
   likes: Array,
+  numberOfLikes: Number,
   commentPerson: String,
   commentContent: String,
   commentTime: String,
