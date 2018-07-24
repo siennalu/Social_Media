@@ -37,63 +37,60 @@
     o name: test
     o password: test123
     o email: test@gmail.com
- ## API測試(4)-上傳圖片
-  •	HTTP Method: POST
-  
-  •	URL:http://localhost:3000/upload
-    
-  •	Body(form-data):
-  
-    o name: test
-    o password: test123
-    o img: 選擇欲上傳的檔案
  
- ## API測試(5)-發送貼文
+ ## API測試(4)-發送貼文
   •	HTTP Method: POST
   
   •	URL:http://localhost:3000/add_article
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o title: test
     o name: test
     o category: testing
     o content: test123
   
- ## API測試(6)-更改貼文
+ ## API測試(5)-更改貼文
   •	HTTP Method: PUT
   
   •	URL:http://localhost:3000/update_article
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o articleID: 複製發送貼文中的文章ID
     o content: test456
   
-  ## API測試(7)-查詢全部貼文
+  ## API測試(6)-查詢全部貼文
   •	HTTP Method: GET
   
   •	URL:http://localhost:3000/search_article
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o name: test
     
-  ## API測試(8)-透過ID查詢貼文
+  ## API測試(7)-透過ID查詢貼文
   •	HTTP Method: POST
   
   •	URL:http://localhost:3000/search_articleByID
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o articleID: 複製發送貼文中的文章ID
     
-  ## API測試(9)-刪除貼文
+  ## API測試(8)-刪除貼文
   •	HTTP Method: PUT
   
   •	URL:http://localhost:3000/delete_article
     
   •	Body(form-data):
   
+    o authorID: 發文人的ID
     o articleID: 複製發送貼文中的文章ID
+  
+   
     
