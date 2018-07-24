@@ -86,7 +86,6 @@
     
   •	Body(form-data):
   
-    o authorID: 發文人的ID
     o articleID: 複製發送貼文中的文章ID
   
    
