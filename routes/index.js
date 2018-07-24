@@ -6,11 +6,11 @@ const Article = require('../controllers/article_controller');
 let user = new User();
 let article = new Article();
 
-router.post('/insert', user.insertUser); //create(register)
+router.post('/register', user.insertUser); //create(register)
 
 router.post('/login', user.loginUser);  //login
 
-router.get('/search', user.retrieveUser); //read
+router.get('/search_user', user.retrieveUser); //read
 
 router.put('/update', user.updateUser); //update
 
