@@ -66,9 +66,6 @@
   
   •	URL:http://localhost:3000/search_article
     
-  •	Body(form-data):
-  
-    o name: test
     
   ## API測試(7)-透過文章ID查詢貼文
   •	HTTP Method: POST
