@@ -14,7 +14,7 @@ module.exports = class Article {
     });
     contentForObject.time = onTime();
     contentForObject.content = req.body.content;
-    contentForArray.push(ContentForObject);
+    contentForArray.push(contentForObject);
     article.listOfContent = contentForArray;
     article.save()
       .then(posts => {
