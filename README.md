@@ -88,6 +88,15 @@
   •	Body(form-data):
   
     o articleID: 複製發送貼文中的文章ID
+    
+  ## API測試(10)-按讚
+  •	HTTP Method: POST
+  
+  •	URL:http://localhost:3000/likes_article
+    
+  •	Body(form-data):
+  
+    o authorID: 發文人的ID
   
    
     
