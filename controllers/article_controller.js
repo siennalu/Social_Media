@@ -5,22 +5,21 @@ module.exports = class Article {
     let ContentForArray = [];
     let ContentForObject = {};
     let article = new articleSchemaModel({
-      Author: req.body.name,
-      Title: req.body.title,
-      Category: req.body.category,
-      Content: [onTime(), req.body.content],
-      Delete: false
+      author: req.body.name,
+      title: req.body.title,
+      category: req.body.category,
+      listOfContent: [onTime(), req.body.content],
+      delete: false
     });
-    console.log(article);
     ContentForObject.time = onTime();
     ContentForObject.content = req.body.content;
     ContentForArray.push(ContentForObject);
-    article.Content = ContentForArray;
+    article.listOfContent = ContentForArray;
     article.save()
       .then(posts => {
         let result = {
           status: "發文成功",
-          artical: posts
+          article: posts
         }
         res.json(result)
       })
@@ -32,7 +31,7 @@ module.exports = class Article {
     updateObj.content = req.body.content;
     articleSchemaModel.findOne({ _id: req.body.articleID})
       .then(doc => {
-        doc.Content.push(updateObj);
+        doc.listOfContent.push(updateObj);
         doc.save().then(value => res.json(value));
       })
       .catch(error => {
@@ -45,10 +44,9 @@ module.exports = class Article {
   }
 
   searchArticle(req, res, next) {
-    articleSchemaModel.find({ Delete: false })
+    articleSchemaModel.find({ delete: false })
       .then(value => {
         res.json(value)
-        console.log(value);
       })
       .catch(error => res.json(error))
   }
@@ -57,7 +55,6 @@ module.exports = class Article {
     articleSchemaModel.findOne({ _id: req.body.articleID })
       .then(value => {
         res.json(value)
-        console.log(value);
       })
       .catch(error => res.json(error))
   }
@@ -65,7 +62,7 @@ module.exports = class Article {
   deleteArticle(req, res, next) {
     articleSchemaModel.findOne({ _id: req.body.articleID})
       .then(doc => {
-        doc.Delete = true;
+        doc.delete = true;
         doc.save().then(value => res.json(value));
       })
       .catch(error => {

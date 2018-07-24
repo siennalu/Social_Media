@@ -2,16 +2,16 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 let articleSchema = new Schema({
-  Author: String,
-  Title: String,
-  Category: String,
-  Content: Array,
-  Likes: Number,
-  LikesPeople: String,
-  CommentPerson: String,
-  CommentContent: String,
-  CommentTime: String,
-  Delete: Boolean
+  author_id: String,
+  author: String,
+  title: String,
+  category: String,
+  listOfContent: Array,
+  likes: Array,
+  commentPerson: String,
+  commentContent: String,
+  commentTime: String,
+  delete: Boolean
 }, { versionKey: false });
 
 let article_schema = mongoose.model('Article', articleSchema);
