@@ -12,7 +12,7 @@ router.post('/login', user.loginUser);  //login
 
 router.get('/search_user', user.retrieveUser); //read
 
-router.put('/update', user.updateUser); //update
+router.put('/update_user', user.updateUser); //update
 
 router.post('/add_article', article.postArticle); //post article
 
