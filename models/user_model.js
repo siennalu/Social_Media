@@ -7,7 +7,8 @@ let userSchema = new Schema({
   name : String,
   password : String,
   email : String,
-  image : Object,
+  avatarLink : String,
+
  }, { versionKey: false });
 
 userSchema.pre('save', function (next) {

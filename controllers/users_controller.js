@@ -1,11 +1,23 @@
 const userSchemaModel = require('../models/user_model.js');
 const verify = require('./service/users_verification.js');
 const jwt =require('jsonwebtoken');
+const formidable = require('formidable');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'dzzdz1kvr',
+  api_key: '154653594993876',
+  api_secret: 'pzNTrLGj6HJkE6QGAUeJ2cyBxAE'
+})
+
+
+
 
 //判斷email格式
 const Check = require('./service/users_checks.js');
 
 let check = new Check();
+
 module.exports = class User {
   insertUser(req, res, next) {
     let user = new userSchemaModel({
@@ -154,33 +166,44 @@ module.exports = class User {
       }
   }
 
-  uploadImage(req, res, next) {
-    //res.send(req.files);
-    const images = req.files;
-    const userUpload = new userSchemaModel({
-      name: req.body.name,
-      password: req.body.password,
-      image: images
-    });
-    userSchemaModel.findOne({ name: userUpload.name })
-      .then(data => {
-        data.image = images;
-        data.save()
-          .then(value => {
-            let result = {
-              status: "上傳檔案成功",
-              content: value
-            }
-            res.json(result)
-          })
-          .catch(error => {
-            let result = {
-              status: "上傳檔案失敗",
-              err: "伺服器錯誤，請稍後再試"
-            }
-            res.json(error)
-          })
-      })
+  uploadImg(req, res, next) {
+    const form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      cloudinary.uploader.upload(files.image.path, function (result) {
+        console.log(result)
+        //console.log(result.secure_url)
+        if (!result.secure_url) {
+          let result = {
+            status: "圖片上傳失敗",
+            err: "伺服器錯誤，請稍後再試"
+          }
+          res.json(result);
+        }
+        else {
+          userSchemaModel.findOne({_id: fields.authorID})
+            .then(data => {
+              data.avatarLink = result.secure_url;
+              console.log(result)
+              //console.log(req.body.name);
+              data.save()
+                .then(value => {
+                  let result = {
+                    status: "圖片上傳成功",
+                    content: value
+                  }
+                  res.json(result)
+                })
+                .catch(error => {
+                  let result = {
+                    status: "圖片上傳失敗",
+                    err: "伺服器錯誤，請稍後再試"
+                  }
+                  res.json(error)
+                })
+            })
+        }
+      }, {folder: 'Social_Media/avatar'});
+    })
   }
 }
 

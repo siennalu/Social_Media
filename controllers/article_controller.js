@@ -17,15 +17,7 @@ module.exports = class Article {
     contentForObject.content = req.body.content;
     contentForArray.push(contentForObject);
     article.listOfContent = contentForArray;
-    article.save()
-      .then(posts => {
-        let result = {
-          status: "發文成功",
-          article: posts
-        }
-        res.json(result)
-      })
-      .catch(error => res.json(error));
+
   }
 
   updateArticle(req, res, next) {
@@ -55,9 +47,15 @@ module.exports = class Article {
 
   searchArticle(req, res, next) {
     articleSchemaModel.find({delete: false})
-
       .then(value => {
-        res.json(value)
+        let sortedArticle = value.sort(function (a, b) {
+          return a.listOfContent[a.listOfContent.length-1].time - b.listOfContent[b.listOfContent.length-1].time;
+        });
+        sortedArticle.map(function(e) {
+          console.log(e.listOfContent[e.listOfContent.length-1].time)
+        })
+        //console.log(sortedArticle);
+        res.json(sortedArticle)
       })
       .catch(error => res.json(error))
   }
@@ -92,11 +90,9 @@ module.exports = class Article {
   }
 
   likesArticle(req, res, next) {
-    //likes.push(req.body.authorID)
-    console.log(req.body.authorID);
-    articleSchemaModel.findOne({authorID: req.body.authorID})
+    articleSchemaModel.findOne({ _id: req.body.articleID})
       .then(doc => {
-        doc.likes.push(req.body.authorID);
+        doc.likes.push(req.body.likesPersonID);
         doc.numberOfLikes = doc.likes.length;
         doc.save().then(value => {
           let result = {
@@ -114,6 +110,30 @@ module.exports = class Article {
           })
       })
   }
+
+  dislikesArticle(req, res, next) {
+    articleSchemaModel.findOne({ _id: req.body.articleID})
+      .then(doc => {
+        let temp = doc.likes.indexOf(req.body.likesPersonID);
+        doc.likes.splice(temp, 1);
+        doc.numberOfLikes = doc.likes.length;
+        doc.save().then(value => {
+          let result = {
+            status: "收回讚成功",
+            content: value
+          }
+          res.json(result);
+        })
+          .catch(error => {
+            let result = {
+              status: "收回讚失敗",
+              err: "伺服器錯誤，請稍後再試"
+            }
+            res.json(error)
+          })
+      })
+  }
+
 }
 
 

@@ -3,6 +3,7 @@ const router = express.Router();
 const User = require('../controllers/users_controller');
 const Article = require('../controllers/article_controller');
 
+
 let user = new User();
 let article = new Article();
 
@@ -24,7 +25,11 @@ router.post('/search_articleByID', article.searchArticleByID); //get the article
 
 router.put('/delete_article', article.deleteArticle); //delete
 
-router.post('/likes_article', article.likesArticle); //likes
+router.put('/likes_article', article.likesArticle); //likes
+
+router.put('/dislikes_article', article.dislikesArticle); //likes
+
+router.post('/upload_image', user.uploadImg);//upload
 
 
 module.exports = router;
