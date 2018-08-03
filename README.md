@@ -155,7 +155,7 @@
   
     o commentID: 留言者的ID
     
-  ## API測試(16)-使用者刪除留言
+  ## API測試(16)-使用者更改留言
   •	HTTP Method: PUT
   
   •	URL: http://localhost:3000/update_comment        
