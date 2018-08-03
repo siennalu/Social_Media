@@ -120,7 +120,7 @@
   
     o	commenterID: test
     
-    o	articleID: 複製發送貼文中的文章ID
+    o articleID: 複製發送貼文中的文章ID
     
     o	content: test
    
@@ -131,7 +131,7 @@
   
   •	Body(form-data):
   
-    o	articleID: 複製發送貼文中的文章ID
+    o articleID: 複製發送貼文中的文章ID
     
     o	likesPersonID: 按讚人的ID
    
