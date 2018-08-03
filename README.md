@@ -118,7 +118,7 @@
   
   •	Body(form-data):
   
-    o	commenterID: test
+    o commenterID: test
     
     o articleID: 複製發送貼文中的文章ID
     
@@ -153,7 +153,7 @@
   
   •	Body(form-data):
   
-    o	commentID: 留言者的ID
+    o	 commentID: 留言者的ID
     
   ## API測試(16)-使用者刪除留言
   •	HTTP Method: PUT
@@ -162,7 +162,7 @@
   
   •	Body(form-data):
   
-    o commentID: test
+    o commentID: 留言者的ID
     
     o content: test
     
