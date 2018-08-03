@@ -107,9 +107,9 @@
   
   •	Body(form-data):
   
-    o	articleID: 複製發送貼文中的文章ID
+    o articleID: 複製發送貼文中的文章ID
     
-    o	dislikesPersonID: 取消讚的ID
+    o dislikesPersonID: 取消讚的ID
 
   ## API測試(12)-使用者留言
   •	HTTP Method: POST
