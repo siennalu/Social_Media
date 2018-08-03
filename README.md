@@ -89,14 +89,85 @@
   
     o articleID: 複製發送貼文中的文章ID
     
-  ## API測試(10)-按讚
+  ## API測試(10)-使用者按讚
   •	HTTP Method: POST
   
   •	URL:http://localhost:3000/likes_article
     
   •	Body(form-data):
   
-    o authorID: 發文人的ID
+    o articleID: 複製發送貼文中的文章ID
+    o	likesPersonID: 按讚人的ID
+
+  ## API測試(11)-使用者收回讚
+  •	HTTP Method: PUT
   
+  •	URL: http://localhost:3000/dislikes_article    
+  
+  •	Body(form-data):
+  
+    o	articleID: 複製發送貼文中的文章ID
+    
+    o	dislikesPersonID: 取消讚的ID
+
+  ## API測試(12)-使用者留言
+ 	•	HTTP Method: POST
+  
+  •	URL: http://localhost:3000/add_comment    
+  
+  •	Body(form-data):
+  
+    o	commenterID: test
+    
+    o	articleID: 複製發送貼文中的文章ID
+    
+    o	content: test
+   
+  ## API測試(13)-使用者留言按讚
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/likes_comment   
+  
+  •	Body(form-data):
+  
+    o	articleID: 複製發送貼文中的文章ID
+    
+    o	likesPersonID: 按讚人的ID
+   
+  ## API測試(14)-使用者留言收回讚
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/dislikes_comment        
+  
+  •	Body(form-data):
+  
+    o	articleID: 複製發送貼文中的文章ID
+    
+    o	dislikesPersonID: 取消讚的ID
+    
+  ## API測試(15)-使用者刪除留言
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/delete_comment        
+  
+  •	Body(form-data):
+  
+    o	commentID: 留言者的ID
+    
+  ## API測試(16)-使用者刪除留言
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/update_comment        
+  
+  •	Body(form-data):
+  
+    o	commentID: 留言者的ID
+    
+    o	content: test
+    
+   
+
+   
+
    
     
