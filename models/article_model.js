@@ -9,9 +9,7 @@ let articleSchema = new Schema({
   listOfContent: Array,
   likes: Array,
   numberOfLikes: Number,
-  commentPerson: Array,
-  commentContent: String,
-  commentTime: String,
+  comment: Array,
   delete: Boolean
 }, { versionKey: false });
 

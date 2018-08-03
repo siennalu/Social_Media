@@ -1,4 +1,5 @@
 const articleSchemaModel = require('../models/article_model.js');
+const commentSchemaModel = require('../models/comment_model.js');
 
 module.exports = class Article {
   postArticle(req, res, next) {
@@ -10,19 +11,29 @@ module.exports = class Article {
       authorID: req.body.authorID,
       title: req.body.title,
       category: req.body.category,
-      listOfContent: [seconds, req.body.content],
+      listOfContent: [],
       delete: false
     });
     contentForObject.time = seconds;
     contentForObject.content = req.body.content;
     contentForArray.push(contentForObject);
     article.listOfContent = contentForArray;
+    article.numberOfLikes = article.likes.length;
 
+    article.save()
+      .then(posts => {
+        let result = {
+          status: "發文成功",
+          article: posts
+        }
+        res.json(result)
+      })
+      .catch(error => res.json(error));
   }
 
   updateArticle(req, res, next) {
     let updateObj = {};
-    var seconds = Math.round(Date.now() / 1000);
+    let seconds = Math.round(Date.now() / 1000);
     updateObj.time = seconds;
     updateObj.content = req.body.content;
     articleSchemaModel.findOne({_id: req.body.articleID})
@@ -45,28 +56,32 @@ module.exports = class Article {
       })
   }
 
-  searchArticle(req, res, next) {
-    articleSchemaModel.find({delete: false})
-      .then(value => {
-        let sortedArticle = value.sort(function (a, b) {
-          return a.listOfContent[a.listOfContent.length-1].time - b.listOfContent[b.listOfContent.length-1].time;
-        });
-        sortedArticle.map(function(e) {
-          console.log(e.listOfContent[e.listOfContent.length-1].time)
-        })
-        //console.log(sortedArticle);
-        res.json(sortedArticle)
-      })
-      .catch(error => res.json(error))
+  async searchArticle(req, res, next) {
+    let resultArray = []
+    let article = await articleSchemaModel.find({delete: false}).exec();
+    for(let i = 0; i <= article.length-1; i++){
+      let commentOfArticle = await findComment(article[i].comment);
+      let temp = [];
+      temp.push(article[i]);
+      let articleAndComment = temp.concat(commentOfArticle);
+      resultArray.push(articleAndComment);
+    }
+    let sortedArticle = resultArray.sort(function (b, a) {
+      return a[0].listOfContent[a[0].listOfContent.length-1].time - b[0].listOfContent[b[0].listOfContent.length-1].time;
+    });
+    res.json(sortedArticle);
   }
 
-  searchArticleByID(req, res, next) {
-    articleSchemaModel.findOne({_id: req.body.articleID})
-      .then(value => {
-        res.json(value)
-      })
-      .catch(error => res.json(error))
+  async searchArticleByID(req, res, next) {
+    let articleArray = []
+    let articleOne = await articleSchemaModel.findOne({delete: false, _id: req.body.articleID}).exec()
+    articleArray.push(articleOne);
+
+    let commentOfArticle = await findComment(articleOne.comment);
+    let articleAndComment = articleArray.concat(commentOfArticle);
+    res.json(articleAndComment)
   }
+
 
   deleteArticle(req, res, next) {
     articleSchemaModel.findOne({_id: req.body.articleID})
@@ -114,7 +129,7 @@ module.exports = class Article {
   dislikesArticle(req, res, next) {
     articleSchemaModel.findOne({ _id: req.body.articleID})
       .then(doc => {
-        let temp = doc.likes.indexOf(req.body.likesPersonID);
+        let temp = doc.likes.indexOf(req.body.dislikesPersonID);
         doc.likes.splice(temp, 1);
         doc.numberOfLikes = doc.likes.length;
         doc.save().then(value => {
@@ -136,5 +151,14 @@ module.exports = class Article {
 
 }
 
-
-
+async function findComment(commentArray){
+  let result = [];
+  for(let e of commentArray){
+    let commentItem = await commentSchemaModel.findOne({delete: false, _id: e}).exec();
+    result.push(commentItem);
+  }
+  let sortedComment = result.sort(function (b, a) {
+    return a.listOfComment[a.listOfComment.length-1].time - b.listOfComment[b.listOfComment.length-1].time;
+  });
+  return sortedComment
+}
