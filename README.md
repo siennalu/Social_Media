@@ -98,7 +98,7 @@
   
     o articleID: 複製發送貼文中的文章ID
     
-    o	likesPersonID: 按讚人的ID
+    o likesPersonID: 按讚人的ID
 
   ## API測試(11)-使用者收回讚
   •	HTTP Method: PUT
@@ -112,7 +112,7 @@
     o	dislikesPersonID: 取消讚的ID
 
   ## API測試(12)-使用者留言
- 	•	HTTP Method: POST
+  •	HTTP Method: POST
   
   •	URL: http://localhost:3000/add_comment    
   
