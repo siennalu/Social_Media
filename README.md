@@ -142,7 +142,7 @@
   
   •	Body(form-data):
   
-    o	articleID: 複製發送貼文中的文章ID
+    o articleID: 複製發送貼文中的文章ID
     
     o dislikesPersonID: 取消讚的ID
     
@@ -153,7 +153,7 @@
   
   •	Body(form-data):
   
-    o	 commentID: 留言者的ID
+    o commentID: 留言者的ID
     
   ## API測試(16)-使用者刪除留言
   •	HTTP Method: PUT
