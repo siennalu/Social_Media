@@ -39,6 +39,8 @@ module.exports = class Article {
     articleSchemaModel.findOne({_id: req.body.articleID})
       .then(doc => {
         doc.listOfContent.push(updateObj);
+        if(req.body.category !== undefined) doc.category = req.body.category;
+        if(req.body.title !== undefined) doc.title = req.body.title;
         doc.save().then(value => {
           let result = {
             status: "發文修改成功",
