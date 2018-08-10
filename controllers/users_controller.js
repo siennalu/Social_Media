@@ -169,8 +169,11 @@ module.exports = class User {
   uploadImg(req, res, next) {
     const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
+      console.log(fields);
+      console.log(fields.authorID);
+      //console.log(files)
       cloudinary.uploader.upload(files.image.path, function (result) {
-        console.log(result)
+        //console.log(result)
         //console.log(result.secure_url)
         if (!result.secure_url) {
           let result = {
@@ -182,8 +185,10 @@ module.exports = class User {
         else {
           userSchemaModel.findOne({_id: fields.authorID})
             .then(data => {
+              //console.log(result.secure_url)
               data.avatarLink = result.secure_url;
-              console.log(result)
+             // console.log(data.avatarLink)
+              //console.log(result)
               //console.log(req.body.name);
               data.save()
                 .then(value => {

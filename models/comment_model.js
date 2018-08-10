@@ -7,7 +7,8 @@ let commentSchema = new Schema({
   listOfComment: Array,
   likes: Array,
   numberOfLikes: Number,
-  delete: Boolean
+  delete: Boolean,
+  mediaLink: Array,
 }, { versionKey: false });
 
 let commenter_schema = mongoose.model('Commenter', commentSchema);

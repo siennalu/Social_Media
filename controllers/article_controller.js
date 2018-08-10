@@ -1,5 +1,13 @@
 const articleSchemaModel = require('../models/article_model.js');
 const commentSchemaModel = require('../models/comment_model.js');
+const formidable = require('formidable');
+const cloudinary = require('cloudinary');
+
+cloudinary.config({
+  cloud_name: 'dzzdz1kvr',
+  api_key: '154653594993876',
+  api_secret: 'pzNTrLGj6HJkE6QGAUeJ2cyBxAE'
+})
 
 module.exports = class Article {
   postArticle(req, res, next) {
@@ -7,28 +15,30 @@ module.exports = class Article {
     let contentForObject = {};
     let seconds = Math.round(Date.now() / 1000);
     let article = new articleSchemaModel({
-      author: req.body.name,
-      authorID: req.body.authorID,
-      title: req.body.title,
-      category: req.body.category,
       listOfContent: [],
       delete: false
     });
-    contentForObject.time = seconds;
-    contentForObject.content = req.body.content;
-    contentForArray.push(contentForObject);
-    article.listOfContent = contentForArray;
-    article.numberOfLikes = article.likes.length;
-
-    article.save()
-      .then(posts => {
-        let result = {
-          status: "發文成功",
-          article: posts
-        }
-        res.json(result)
-      })
-      .catch(error => res.json(error));
+    const form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      contentForObject.time = seconds;
+      contentForObject.content = fields.content;
+      contentForArray.push(contentForObject);
+      article.listOfContent = contentForArray;
+      article.numberOfLikes = article.likes.length;
+      //console.log(files.image.path)
+      cloudinary.uploader.upload(files.image.path, function (result) {
+        article.mediaLink = result.secure_url;
+        article.save()
+          .then(posts => {
+            let result = {
+              status: "發文成功",
+              article: posts
+            }
+            res.json(result)
+          })
+          .catch(error => res.json(error));
+      }, {folder: 'Social_Media/mediaLink'});
+    })
   }
 
   updateArticle(req, res, next) {

@@ -10,6 +10,7 @@ let articleSchema = new Schema({
   likes: Array,
   numberOfLikes: Number,
   comment: Array,
+  mediaLink: Array,
   delete: Boolean
 }, { versionKey: false });
 
