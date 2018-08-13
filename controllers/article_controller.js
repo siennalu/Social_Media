@@ -13,6 +13,8 @@ module.exports = class Article {
   postArticle(req, res, next) {
     let contentForArray = [];
     let contentForObject = {};
+    let photoObj = {};
+    let videoObj = {};
     let seconds = Math.round(Date.now() / 1000);
     let article = new articleSchemaModel({
       listOfContent: [],
@@ -25,9 +27,68 @@ module.exports = class Article {
       contentForArray.push(contentForObject);
       article.listOfContent = contentForArray;
       article.numberOfLikes = article.likes.length;
-      //console.log(files.image.path)
-      cloudinary.uploader.upload(files.image.path, function (result) {
-        article.mediaLink = result.secure_url;
+      article.hashTags = fields.hashTags;
+
+      //上傳圖片及照片
+      if (files.image != null && files.video != null) {
+        cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
+          photoObj.type = fields.photoType; //png
+          photoObj.link = resultPhotoUrl.secure_url;
+          article.mediaLink.push(photoObj);
+
+          cloudinary.uploader.upload_large(files.video.path, function (resultVideoUrl) {
+            videoObj.type = fields.videoType;
+            videoObj.link = resultVideoUrl.secure_url;
+            article.mediaLink.push(videoObj);
+            article.save()
+              .then(posts => {
+                let result = {
+                  status: "發文成功",
+                  article: posts
+                }
+                res.json(result)
+              })
+              .catch(error => res.json(error));
+          }, {resource_type: "video"});
+        }, {folder: 'Social_Media/mediaLink'});
+
+        //上傳圖片
+      } else if (files.image != undefined && files.video == null) {
+        cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
+          photoObj.type = fields.photoType; //png
+          photoObj.link = resultPhotoUrl.secure_url;
+          article.mediaLink.push(photoObj);
+
+          article.save()
+            .then(posts => {
+              let result = {
+                status: "發文成功",
+                article: posts
+              }
+              res.json(result)
+            })
+            .catch(error => res.json(error));
+        }, {folder: 'Social_Media/mediaLink'});
+
+        //上傳影片
+      } else if (files.image == null && files.video != null){
+        cloudinary.uploader.upload_large(files.video.path, function (resultVideoUrl) {
+          videoObj.type = fields.videoType; //mp4
+          videoObj.link = resultVideoUrl.secure_url;
+          article.mediaLink.push(videoObj);
+
+          article.save()
+            .then(posts => {
+              let result = {
+                status: "發文成功",
+                article: posts
+              }
+              res.json(result)
+            })
+            .catch(error => res.json(error));
+        }, {resource_type: "video"});
+        //只上傳文字
+      } else if (files.image == null && files.video == null) {
         article.save()
           .then(posts => {
             let result = {
@@ -37,35 +98,89 @@ module.exports = class Article {
             res.json(result)
           })
           .catch(error => res.json(error));
-      }, {folder: 'Social_Media/mediaLink'});
+      }
     })
   }
 
   updateArticle(req, res, next) {
     let updateObj = {};
+    let photoObj = {};
+    let videoObj = {};
     let seconds = Math.round(Date.now() / 1000);
-    updateObj.time = seconds;
-    updateObj.content = req.body.content;
-    articleSchemaModel.findOne({_id: req.body.articleID})
-      .then(doc => {
-        doc.listOfContent.push(updateObj);
-        if(req.body.category !== undefined) doc.category = req.body.category;
-        if(req.body.title !== undefined) doc.title = req.body.title;
-        doc.save().then(value => {
-          let result = {
-            status: "發文修改成功",
-            content: value
-          }
-          res.json(result);
-        })
-          .catch(error => {
-            let result = {
-              status: "發文修改失敗",
-              err: "伺服器錯誤，請稍後再試"
-            }
-            res.json(error)
+    const form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      updateObj.time = seconds;
+      updateObj.content = fields.content;
+
+      // 修改圖片和影片
+      if (files.image != null && files.video != null) {
+        cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
+          photoObj.type = fields.photoType;
+          photoObj.link = resultPhotoUrl.secure_url;
+        cloudinary.uploader.upload_large(files.video.path, function (resultVideoUrl) {
+          videoObj.type = fields.videoType; //mp4
+          videoObj.link = resultVideoUrl.secure_url;
+            articleSchemaModel.findOne({_id: fields.articleID})
+              .then(doc => {
+                doc.listOfContent.push(updateObj);
+                doc.mediaLink.push(photoObj);
+                doc.mediaLink.push(videoObj);
+                doc.save()
+                  .then(posts => {
+                    let result = {
+                      status: "圖片和影片修改成功",
+                      article: posts
+                    }
+                    res.json(result)
+                  })
+                  .catch(error => res.json(error));
+              })
+          }, {resource_type: "video"});
+        }, {folder: 'Social_Media/mediaLink'});
+
+       //修改圖片
+      } else if (files.image != undefined && files.video == null) {
+        cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
+          photoObj.type = fields.photoType;
+          photoObj.link = resultPhotoUrl.secure_url;
+        articleSchemaModel.findOne({_id: fields.articleID})
+          .then(doc => {
+            doc.listOfContent.push(updateObj);
+            doc.mediaLink.push(photoObj);
+          doc.save()
+            .then(posts => {
+              let result = {
+                status: "圖片修改成功",
+                article: posts
+              }
+              res.json(result)
+            })
+            .catch(error => res.json(error));
           })
-      })
+        }, {folder: 'Social_Media/mediaLink'});
+
+        //修改影片
+      } else if (files.image == undefined && files.video != null) {
+        cloudinary.uploader.upload_large(files.video.path, function (resultVideoUrl) {
+          videoObj.type = fields.videoType;
+          videoObj.link = resultVideoUrl.secure_url;
+        articleSchemaModel.findOne({_id: fields.articleID})
+            .then(doc => {
+              doc.listOfContent.push(updateObj);
+              doc.mediaLink.push(videoObj);
+              doc.save()
+                .then(posts => {
+                  let result = {
+                    status: "影片修改成功",
+                    article: posts
+                  }
+                  res.json(result)
+                })
+                .catch(error => res.json(error));
+            })
+        }, {folder: 'Social_Media/mediaLink'});
+      }
+    })
   }
 
   async searchArticle(req, res, next) {
@@ -93,7 +208,6 @@ module.exports = class Article {
     let articleAndComment = articleArray.concat(commentOfArticle);
     res.json(articleAndComment)
   }
-
 
   deleteArticle(req, res, next) {
     articleSchemaModel.findOne({_id: req.body.articleID})

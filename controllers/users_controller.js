@@ -91,11 +91,11 @@ module.exports = class User {
                 // token一分鐘後過期
                 data: foundUser.id
               }, 'secret');
-              res.setHeader('token', token);
               res.json({
                 result: {
                   status: "登入成功",
-                  loginMember: "歡迎 " + foundUser.name + " 的登入"
+                  loginMember: "歡迎 " + foundUser.name + " 的登入",
+                  token: token
                 }
               })
             } else {

@@ -8,7 +8,7 @@ let userSchema = new Schema({
   password : String,
   email : String,
   avatarLink : String,
-
+  backGroundLink: String,
  }, { versionKey: false });
 
 userSchema.pre('save', function (next) {
