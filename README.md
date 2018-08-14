@@ -186,7 +186,7 @@
     
     o image: 選擇欲上傳的圖片
     
-    o	photoType: 圖片格式
+    o photoType: 圖片格式
 
     
    
