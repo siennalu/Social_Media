@@ -105,7 +105,7 @@
     
   •	Body(form-data):
   
-    o articleID: 複製發送貼文中的文章ID
+    o commentID: 留言者的ID 
     
     o likesPersonID: 按讚人的ID
 
@@ -116,7 +116,7 @@
   
   •	Body(form-data):
   
-    o articleID: 複製發送貼文中的文章ID
+    o commentID: 留言者的ID 
     
     o dislikesPersonID: 取消讚的ID
 
@@ -184,7 +184,7 @@
   
     o authorID: 發文人的ID
     
-    o	image: 選擇欲上傳的圖片
+    o image: 選擇欲上傳的圖片
     
     o	photoType: 圖片格式
 
