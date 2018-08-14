@@ -54,6 +54,10 @@
     o name: test
     o category: testing
     o content: test123
+    o image: 選擇欲上傳的圖片
+    o photoType: 圖片格式
+    o video: 選擇欲上傳的影片
+    o videoType: 影片格式
   
  ## API測試(6)-更改貼文
   •	HTTP Method: PUT
@@ -64,6 +68,11 @@
   
     o articleID: 複製發送貼文中的文章ID
     o content: test456
+    o image: 選擇欲上傳的圖片
+    o photoType: 圖片格式
+    o video: 選擇欲上傳的影片
+    o videoType: 影片格式
+    
   
   ## API測試(7)-查詢全部貼文
   •	HTTP Method: GET
@@ -165,6 +174,20 @@
     o commentID: 留言者的ID
     
     o content: test
+    
+  ## API測試(17)-使用者上傳背景照(封面照片)
+  •	HTTP Method: POST
+  
+  •	URL: http://localhost:3000/upload_backGroundPhoto        
+  
+  •	Body(form-data):
+  
+    o authorID: 發文人的ID
+    
+    o	image: 選擇欲上傳的圖片
+    
+    o	photoType: 圖片格式
+
     
    
 
