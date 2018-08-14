@@ -42,5 +42,7 @@ router.put('/delete_comment', comment.deleteComment); //delete comment
 
 router.put('/update_comment', comment.updateComment); //update comment
 
+router.post('/upload_backGroundPhoto', user.uploadBgImg); //upload
+
 
 module.exports = router;

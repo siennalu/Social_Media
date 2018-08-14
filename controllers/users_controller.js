@@ -169,12 +169,7 @@ module.exports = class User {
   uploadImg(req, res, next) {
     const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
-      console.log(fields);
-      console.log(fields.authorID);
-      //console.log(files)
       cloudinary.uploader.upload(files.image.path, function (result) {
-        //console.log(result)
-        //console.log(result.secure_url)
         if (!result.secure_url) {
           let result = {
             status: "圖片上傳失敗",
@@ -185,11 +180,7 @@ module.exports = class User {
         else {
           userSchemaModel.findOne({_id: fields.authorID})
             .then(data => {
-              //console.log(result.secure_url)
               data.avatarLink = result.secure_url;
-             // console.log(data.avatarLink)
-              //console.log(result)
-              //console.log(req.body.name);
               data.save()
                 .then(value => {
                   let result = {
@@ -208,6 +199,42 @@ module.exports = class User {
             })
         }
       }, {folder: 'Social_Media/avatar'});
+    })
+  }
+
+  uploadBgImg(req, res, next) {
+    const form = new formidable.IncomingForm();
+    form.parse(req, function (err, fields, files) {
+      cloudinary.uploader.upload(files.image.path, function (result) {
+        if (!result.secure_url) {
+          let result = {
+            status: "背景照上傳失敗",
+            err: "伺服器錯誤，請稍後再試"
+          }
+          res.json(result);
+        }
+        else {
+          userSchemaModel.findOne({_id: fields.authorID})
+            .then(data => {
+              data.backGroundLink = result.secure_url;
+              data.save()
+                .then(value => {
+                  let result = {
+                    status: "背景照上傳成功",
+                    content: value
+                  }
+                  res.json(result)
+                })
+                .catch(error => {
+                  let result = {
+                    status: "背景照上傳失敗",
+                    err: "伺服器錯誤，請稍後再試"
+                  }
+                  res.json(error)
+                })
+            })
+        }
+      }, {folder: 'Social_Media/backGroundPhoto'});
     })
   }
 }

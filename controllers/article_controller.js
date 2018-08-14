@@ -43,7 +43,7 @@ module.exports = class Article {
             article.save()
               .then(posts => {
                 let result = {
-                  status: "發文成功",
+                  status: "圖片和影片發文成功",
                   article: posts
                 }
                 res.json(result)
@@ -62,7 +62,7 @@ module.exports = class Article {
           article.save()
             .then(posts => {
               let result = {
-                status: "發文成功",
+                status: "圖片發文成功",
                 article: posts
               }
               res.json(result)
@@ -80,7 +80,7 @@ module.exports = class Article {
           article.save()
             .then(posts => {
               let result = {
-                status: "發文成功",
+                status: "影片發文成功",
                 article: posts
               }
               res.json(result)
