@@ -172,7 +172,7 @@ module.exports = class User {
       cloudinary.uploader.upload(files.image.path, function (result) {
         if (!result.secure_url) {
           let result = {
-            status: "圖片上傳失敗",
+            status: "大頭貼上傳失敗",
             err: "伺服器錯誤，請稍後再試"
           }
           res.json(result);
@@ -184,14 +184,14 @@ module.exports = class User {
               data.save()
                 .then(value => {
                   let result = {
-                    status: "圖片上傳成功",
+                    status: "大頭貼上傳成功",
                     content: value
                   }
                   res.json(result)
                 })
                 .catch(error => {
                   let result = {
-                    status: "圖片上傳失敗",
+                    status: "大頭貼上傳失敗",
                     err: "伺服器錯誤，請稍後再試"
                   }
                   res.json(error)

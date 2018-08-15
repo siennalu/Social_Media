@@ -179,6 +179,21 @@ module.exports = class Article {
                 .catch(error => res.json(error));
             })
         }, {folder: 'Social_Media/mediaLink'});
+
+        //修改文字
+      } else if (files.image == null && files.video == null) {
+        articleSchemaModel.findOne({_id: fields.articleID})
+          .then(doc => {
+            doc.listOfComment.push(updateObj);
+            doc.save().then(value => {
+              let result = {
+                status: "發文修改成功",
+                content: value
+              }
+              res.json(result);
+            })
+              .catch(error => res.json(error));
+          })
       }
     })
   }

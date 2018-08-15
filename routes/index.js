@@ -30,7 +30,7 @@ router.put('/likes_article', article.likesArticle); //likes
 
 router.put('/dislikes_article', article.dislikesArticle); //likes
 
-router.post('/upload_image', user.uploadImg);//upload
+router.post('/upload_avatar', user.uploadImg);//upload
 
 router.post('/add_comment', comment.commentArticle); //leave comment
 
