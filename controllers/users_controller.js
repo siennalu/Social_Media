@@ -76,7 +76,7 @@ module.exports = class User {
           res.json({
             result: {
               status: "登入失敗",
-              content:"請輸入正確的帳號或密碼"//之前mysql都是打rows
+              content:"請輸入正確的帳號或密碼"
             }
           })
         }
@@ -178,7 +178,7 @@ module.exports = class User {
           res.json(result);
         }
         else {
-          userSchemaModel.findOne({_id: fields.authorID})
+          userSchemaModel.findOne({_id: fields.userID})
             .then(data => {
               data.avatarLink = result.secure_url;
               data.save()
@@ -214,7 +214,7 @@ module.exports = class User {
           res.json(result);
         }
         else {
-          userSchemaModel.findOne({_id: fields.authorID})
+          userSchemaModel.findOne({_id: fields.userID})
             .then(data => {
               data.backGroundLink = result.secure_url;
               data.save()
