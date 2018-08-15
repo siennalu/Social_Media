@@ -85,7 +85,7 @@
   
   •	URL:http://localhost:3000/search_articleByID
     
-  •	Body(form-data):
+  •	Body(x-www-form-urlencoded):
   
     o articleID: 複製發送貼文中的文章ID
     
@@ -94,7 +94,7 @@
   
   •	URL:http://localhost:3000/delete_article
     
-  •	Body(form-data):
+  •	Body(x-www-form-urlencoded):
   
     o articleID: 複製發送貼文中的文章ID
     
@@ -103,9 +103,9 @@
   
   •	URL:http://localhost:3000/likes_article
     
-  •	Body(form-data):
+  •	Body(x-www-form-urlencoded):
   
-    o commentID: 留言者的ID 
+    o articleID: 複製發送貼文中的文章ID
     
     o likesPersonID: 按讚人的ID
 
@@ -114,11 +114,11 @@
   
   •	URL: http://localhost:3000/dislikes_article    
   
-  •	Body(form-data):
+  •	Body(x-www-form-urlencoded):
   
-    o commentID: 留言者的ID 
+    o articleID: 複製發送貼文中的文章ID
     
-    o dislikesPersonID: 取消讚的ID
+    o dislikesPersonID: 取消讚人的ID
 
   ## API測試(12)-使用者留言
   •	HTTP Method: POST
@@ -133,14 +133,22 @@
     
     o content: test	
     
+    o image: 選擇欲上傳的圖片
+    
+    o photoType: 圖片格式
+    
+    o video: 選擇欲上傳的影片
+    
+    o videoType: 影片格式
+    
   ## API測試(13)-使用者留言按讚
   •	HTTP Method: PUT
   
   •	URL: http://localhost:3000/likes_comment   
   
-  •	Body(form-data):
+  •	Body(x-www-form-urlencoded):
   
-    o articleID: 複製發送貼文中的文章ID
+    o commentID: 留言ID
     
     o likesPersonID: 按讚人的ID
    
@@ -149,20 +157,20 @@
   
   •	URL: http://localhost:3000/dislikes_comment        
   
-  •	Body(form-data):
+  • Body(x-www-form-urlencoded):
   
-    o articleID: 複製發送貼文中的文章ID
+    o commentID: 留言ID
     
-    o dislikesPersonID: 取消讚的ID
+    o dislikesPersonID: 取消讚人的ID
     
   ## API測試(15)-使用者刪除留言
   •	HTTP Method: PUT
   
   •	URL: http://localhost:3000/delete_comment        
   
-  •	Body(form-data):
+  •Body(x-www-form-urlencoded):
   
-    o commentID: 留言者的ID
+    o commentID: 留言ID
     
   ## API測試(16)-使用者修改留言
   •	HTTP Method: PUT
@@ -171,9 +179,17 @@
   
   •	Body(form-data):
   
-    o commentID: 留言者的ID
+    o commentID: 留言ID
     
     o content: test
+    
+    o image: 選擇欲上傳的圖片
+    
+    o photoType: 圖片格式
+    
+    o video: 選擇欲上傳的影片
+    
+    o videoType: 影片格式
     
   ## API測試(17)-使用者上傳背景照(封面照片)
   •	HTTP Method: POST
@@ -182,11 +198,24 @@
   
   •	Body(form-data):
   
-    o authorID: 發文人的ID
+    o userID: 使用者(註冊)的ID
     
     o image: 選擇欲上傳的圖片
     
     o photoType: 圖片格式
+    
+  ## API測試(18)-使用者上傳大頭照
+  •	HTTP Method: POST
+  
+  •	URL: http://localhost:3000/upload_avatar        
+  
+  •	Body(form-data):
+  
+    o userID: 使用者(註冊)的ID
+    
+    o image: 選擇欲上傳的圖片
+    
+    o photoType: 圖片格式 
 
     
    
