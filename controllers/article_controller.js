@@ -22,6 +22,10 @@ module.exports = class Article {
     });
     const form = new formidable.IncomingForm();
     form.parse(req, function (err, fields, files) {
+      article.authorID = fields.authorID;
+      article.author = fields.author;
+      article.title = fields.title;
+      article.category = fields.category;
       contentForObject.time = seconds;
       contentForObject.content = fields.content;
       contentForArray.push(contentForObject);
@@ -53,7 +57,7 @@ module.exports = class Article {
         }, {folder: 'Social_Media/mediaLink'});
 
         //上傳圖片
-      } else if (files.image != undefined && files.video == null) {
+      } else if (files.image != null && files.video == null) {
         cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
           photoObj.type = fields.photoType; //png
           photoObj.link = resultPhotoUrl.secure_url;
@@ -139,7 +143,7 @@ module.exports = class Article {
         }, {folder: 'Social_Media/mediaLink'});
 
        //修改圖片
-      } else if (files.image != undefined && files.video == null) {
+      } else if (files.image != null && files.video == null) {
         cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
           photoObj.type = fields.photoType;
           photoObj.link = resultPhotoUrl.secure_url;
@@ -160,7 +164,7 @@ module.exports = class Article {
         }, {folder: 'Social_Media/mediaLink'});
 
         //修改影片
-      } else if (files.image == undefined && files.video != null) {
+      } else if (files.image == null && files.video != null) {
         cloudinary.uploader.upload_large(files.video.path, function (resultVideoUrl) {
           videoObj.type = fields.videoType;
           videoObj.link = resultVideoUrl.secure_url;
@@ -184,7 +188,7 @@ module.exports = class Article {
       } else if (files.image == null && files.video == null) {
         articleSchemaModel.findOne({_id: fields.articleID})
           .then(doc => {
-            doc.listOfComment.push(updateObj);
+            doc.listOfContent.push(updateObj);
             doc.save().then(value => {
               let result = {
                 status: "發文修改成功",

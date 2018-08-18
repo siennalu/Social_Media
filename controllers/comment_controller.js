@@ -136,7 +136,7 @@ module.exports = class Comment {
         comment.save()
           .then(posts => {
             let result = {
-              status: "發文成功",
+              status: "留言成功",
               article: posts
             }
             res.json(result)
