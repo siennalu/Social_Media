@@ -95,6 +95,7 @@ module.exports = class Article {
       } else if (files.image == null && files.video == null) {
         article.save()
           .then(posts => {
+           // posts.author = fields.author;
             let result = {
               status: "發文成功",
               article: posts
@@ -218,7 +219,7 @@ module.exports = class Article {
     res.json(sortedArticle);
   }
 
-  async searchArticleByID(req, res, next) {
+  async searchArticleByArticleID(req, res, next) {
     let articleArray = []
     let articleOne = await articleSchemaModel.findOne({delete: false, _id: req.body.articleID}).exec()
     articleArray.push(articleOne);

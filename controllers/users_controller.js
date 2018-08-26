@@ -1,4 +1,5 @@
 const userSchemaModel = require('../models/user_model.js');
+const profileSchemaModel = require('../models/profile_model');
 const verify = require('./service/users_verification.js');
 const jwt =require('jsonwebtoken');
 const formidable = require('formidable');
@@ -20,10 +21,19 @@ let check = new Check();
 
 module.exports = class User {
   insertUser(req, res, next) {
-    let user = new userSchemaModel({
-      name: req.body.name,
+    const user = new userSchemaModel({
+      userName: req.body.userName,
       password: req.body.password,
-      email: req.body.email
+      email: req.body.email,
+    });
+
+
+    const profile = new profileSchemaModel({
+      userID: user._id,
+      userName: req.body.userName,
+      aboutMe: "",
+      following: [],
+      fans: []
     });
 
     //檢查是否有重複的使用者
@@ -50,6 +60,15 @@ module.exports = class User {
                   res.json(result)
                 })
                 .catch(error => res.json(error));
+
+              profile.save()
+                .then (doc => {
+                  console.log("profile created")
+                })
+                .catch(error => console.log(error));
+
+
+
             }
       } else {
         res.json({
@@ -66,7 +85,7 @@ module.exports = class User {
   loginUser(req, res, next) {
     //get client's data
     let user = new userSchemaModel({
-      name: req.body.name,
+      userName: req.body.userName,
       password: req.body.password,
       email: req.body.email
     });
@@ -94,7 +113,7 @@ module.exports = class User {
               res.json({
                 result: {
                   status: "登入成功",
-                  loginMember: "歡迎 " + foundUser.name + " 的登入",
+                  loginMember: "歡迎 " + foundUser.userName + " 的登入",
                   token: token
                 }
               })
@@ -137,11 +156,11 @@ module.exports = class User {
               const id = tokenResult;
               //console.log(id);
               const userUpdate = new userSchemaModel({
-                name: req.body.name,
+                userName: req.body.userName,
                 password: req.body.password,
                 email: req.body.email
               });
-              userSchemaModel.findOne({ name: userUpdate.name })
+              userSchemaModel.findOne({ userName: userUpdate.userName })
                 .then(doc => {
                   doc.password = userUpdate.password;
                   doc.email = userUpdate.email;
@@ -164,78 +183,6 @@ module.exports = class User {
                 }
             })
       }
-  }
-
-  uploadImg(req, res, next) {
-    const form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields, files) {
-      cloudinary.uploader.upload(files.image.path, function (result) {
-        if (!result.secure_url) {
-          let result = {
-            status: "大頭貼上傳失敗",
-            err: "伺服器錯誤，請稍後再試"
-          }
-          res.json(result);
-        }
-        else {
-          userSchemaModel.findOne({_id: fields.userID})
-            .then(data => {
-              data.avatarLink = result.secure_url;
-              data.save()
-                .then(value => {
-                  let result = {
-                    status: "大頭貼上傳成功",
-                    content: value
-                  }
-                  res.json(result)
-                })
-                .catch(error => {
-                  let result = {
-                    status: "大頭貼上傳失敗",
-                    err: "伺服器錯誤，請稍後再試"
-                  }
-                  res.json(error)
-                })
-            })
-        }
-      }, {folder: 'Social_Media/avatar'});
-    })
-  }
-
-  uploadBgImg(req, res, next) {
-    const form = new formidable.IncomingForm();
-    form.parse(req, function (err, fields, files) {
-      cloudinary.uploader.upload(files.image.path, function (result) {
-        if (!result.secure_url) {
-          let result = {
-            status: "背景照上傳失敗",
-            err: "伺服器錯誤，請稍後再試"
-          }
-          res.json(result);
-        }
-        else {
-          userSchemaModel.findOne({_id: fields.userID})
-            .then(data => {
-              data.backGroundLink = result.secure_url;
-              data.save()
-                .then(value => {
-                  let result = {
-                    status: "背景照上傳成功",
-                    content: value
-                  }
-                  res.json(result)
-                })
-                .catch(error => {
-                  let result = {
-                    status: "背景照上傳失敗",
-                    err: "伺服器錯誤，請稍後再試"
-                  }
-                  res.json(error)
-                })
-            })
-        }
-      }, {folder: 'Social_Media/backGroundPhoto'});
-    })
   }
 }
 

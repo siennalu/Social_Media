@@ -5,11 +5,9 @@ const bcrypt = require('bcrypt'),
 
 let userSchema = new Schema({
   userID: String,
-  name : String,
+  userName : String,
   password : String,
   email : String,
-  avatarLink : String,
-  backGroundLink: String,
  }, { versionKey: false });
 
 userSchema.pre('save', function (next) {

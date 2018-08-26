@@ -3,10 +3,12 @@ const router = express.Router();
 const User = require('../controllers/users_controller');
 const Article = require('../controllers/article_controller');
 const Comment = require('../controllers/comment_controller');
+const Profile = require('../controllers/profile_controller')
 
 let user = new User();
 let article = new Article();
 let comment = new Comment();
+let profile = new Profile();
 
 router.post('/register', user.insertUser); //create(register)
 
@@ -22,7 +24,7 @@ router.put('/update_article', article.updateArticle); //update article
 
 router.get('/search_article', article.searchArticle); //get all of the article
 
-router.post('/search_articleByID', article.searchArticleByID); //get the article by ID
+router.post('/search_articleByArticleID', article.searchArticleByArticleID); //get the article by articleID
 
 router.put('/delete_article', article.deleteArticle); //delete
 
@@ -30,7 +32,7 @@ router.put('/likes_article', article.likesArticle); //likes
 
 router.put('/dislikes_article', article.dislikesArticle); //likes
 
-router.post('/upload_avatar', user.uploadImg);//upload
+router.post('/upload_avatar', profile.uploadAvatar);//upload
 
 router.post('/add_comment', comment.commentArticle); //leave comment
 
@@ -42,7 +44,20 @@ router.put('/delete_comment', comment.deleteComment); //delete comment
 
 router.put('/update_comment', comment.updateComment); //update comment
 
-router.post('/upload_backGroundPhoto', user.uploadBgImg); //upload
+router.post('/upload_backgroundPhoto', profile.uploadBackgroundPhoto); //upload
+
+router.post('/search_profileByUserID', profile.searchProfileByUserID); //get the profile by userID
+
+router.post('/search_articleByUserID', profile.searchArticleByUserID); //get the article by userID
+
+router.put('/profile_setting', profile.profileSetting); //profile
+
+router.put('/friends_following', profile.friendsFollowing); //追蹤
+
+//router.put('/friends_unfollowing', profile.profileFollowing); //取消追蹤
+
+
+
 
 
 module.exports = router;
