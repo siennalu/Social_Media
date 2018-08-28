@@ -6,7 +6,7 @@
   
   •	Body(x-www-form-urlencoded):  
   
-    o name: test
+    o userName: test
     o password: test 
     o email: test@gmail.com
     
@@ -33,7 +33,7 @@
     
   •	Body(x-www-form-urlencoded):
   
-    o name: test
+    o userName: test
     o password: test123
     o email: test@gmail.com
     
@@ -51,8 +51,9 @@
   
     o authorID: 發文人的ID
     o title: test
-    o name: test
+    o userName: test
     o category: testing
+    o privacy: private
     o content: test123
     o image: 選擇欲上傳的圖片
     o photoType: 圖片格式
@@ -68,6 +69,7 @@
   
     o articleID: 複製發送貼文中的文章ID
     o content: test456
+    o privacy: public
     o image: 選擇欲上傳的圖片
     o photoType: 圖片格式
     o video: 選擇欲上傳的影片
@@ -83,7 +85,7 @@
   ## API測試(8)-透過文章ID查詢貼文
   •	HTTP Method: POST
   
-  •	URL:http://localhost:3000/search_articleByID
+  •	URL:http://localhost:3000/search_articleByArticleID
     
   •	Body(x-www-form-urlencoded):
   
@@ -194,7 +196,7 @@
   ## API測試(17)-使用者上傳背景照(封面照片)
   •	HTTP Method: POST
   
-  •	URL: http://localhost:3000/upload_backGroundPhoto        
+  •	URL: http://localhost:3000/upload_backgroundPhoto        
   
   •	Body(form-data):
   
@@ -215,7 +217,62 @@
     
     o image: 選擇欲上傳的圖片
     
-    o photoType: 圖片格式 
+  ## API測試(19)-搜尋個人頁面
+  •	HTTP Method: POST
+  
+  •	URL: http://localhost:3000/search_ profileByUserID     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID: 使用者(註冊)ID
+   
+  ## API測試(20)-透過UserID查詢貼文
+  •	HTTP Method: POST
+  
+  •	URL: http://localhost:3000/search_ profileByUserID     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID: 使用者(註冊)ID
+    
+  ## API測試(21)-個人頁面設定
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/search_ profile_setting     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID: 使用者(註冊)ID
+    
+    o	userName: test
+    
+    o	aboutMe: Hello
+    
+    o	colorOfTheme: black
+    
+ ## API測試(22)-追蹤好友
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/friends_following     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID_following: 追蹤人的ID
+    
+    o	userID_followed: 被追蹤的ID
+    
+  ## API測試(22)-追蹤好友
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/friends_unfollowing     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID_following: 追蹤人的ID
+    
+    o	userID_followed: 被追蹤的ID(欲取消的追蹤人ID)
+    
+   
 
     
    
