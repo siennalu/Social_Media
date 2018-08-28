@@ -248,7 +248,7 @@
     
     o	aboutMe: Hello
     
-    o	colorOfTheme: black
+    o	colorOfTheme: Black
     
  ## API測試(22)-追蹤好友
   •	HTTP Method: PUT
@@ -261,7 +261,7 @@
     
     o	userID_followed: 被追蹤的ID
     
-  ## API測試(22)-追蹤好友
+  ## API測試(23)-追蹤好友
   •	HTTP Method: PUT
   
   •	URL: http://localhost:3000/friends_unfollowing     
