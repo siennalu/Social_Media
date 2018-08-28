@@ -220,7 +220,7 @@
   ## API測試(19)-搜尋個人頁面
   •	HTTP Method: POST
   
-  •	URL: http://localhost:3000/search_ profileByUserID     
+  •	URL: http://localhost:3000/search_profile 
   
   • Body(x-www-form-urlencoded):
   
@@ -229,7 +229,7 @@
   ## API測試(20)-透過UserID查詢貼文
   •	HTTP Method: POST
   
-  •	URL: http://localhost:3000/search_ profileByUserID     
+  •	URL: http://localhost:3000/search_profileByUserID     
   
   • Body(x-www-form-urlencoded):
   
@@ -238,7 +238,7 @@
   ## API測試(21)-個人頁面設定
   •	HTTP Method: PUT
   
-  •	URL: http://localhost:3000/search_ profile_setting     
+  •	URL: http://localhost:3000/profile_setting     
   
   • Body(x-www-form-urlencoded):
   
