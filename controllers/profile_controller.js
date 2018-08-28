@@ -127,7 +127,46 @@ module.exports = class Profile {
             res.json(error)
           })
   }
-  
+
+
+  friendsUnfollowing(req, res, next) {
+    profileSchemaModel.findOne({userID: req.body.userID_followed})  //被追蹤的人
+      .then(data_follow => {
+        //確認是否已為粉絲
+        if (data_follow.fans.indexOf(req.body.userID_following) != -1)  data_follow.fans.splice(data_follow.fans.indexOf(req.body.userID_following),1)
+        data_follow.save()
+          .then(value => {
+            console.log("fans delete")
+          })
+          .catch(error => console.log(error));
+      })
+      .catch(error => console.log(error));
+    profileSchemaModel.findOne({userID: req.body.userID_following})   //追蹤的人
+      .then(doc_follow => {
+        //確認是否已追蹤
+        if (doc_follow.following.indexOf(req.body.userID_followed) != -1) doc_follow.following.splice(doc_follow.following.indexOf(req.body.userID_followed),1)
+        doc_follow.save()
+          .then(result => {
+            console.log("following delete")
+          })
+          .catch(error => console.log(error));
+        let result = {
+          status: "追蹤刪除成功",
+          content: doc_follow
+        }
+        res.json(result)
+      })
+      .catch(error => {
+        let result = {
+          status: "追蹤刪除失敗",
+          err: "伺服器錯誤，請稍後再試"
+        }
+        res.json(error)
+      })
+
+  }
+
+
   //上傳大頭照
   uploadAvatar(req, res, next) {
     const form = new formidable.IncomingForm();
