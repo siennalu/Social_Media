@@ -6,7 +6,7 @@ let articleSchema = new Schema({
   author: String,
   title: String,
   category: String,
-  authority: String,
+  privacy: String,
   listOfContent: Array,
   likes: Array,
   numberOfLikes: Number,

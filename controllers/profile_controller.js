@@ -127,9 +127,7 @@ module.exports = class Profile {
             res.json(error)
           })
   }
-
-
-
+  
   //上傳大頭照
   uploadAvatar(req, res, next) {
     const form = new formidable.IncomingForm();

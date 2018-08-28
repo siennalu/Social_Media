@@ -26,6 +26,7 @@ module.exports = class Article {
       article.author = fields.author;
       article.title = fields.title;
       article.category = fields.category;
+      article.privacy = fields.privacy;
       contentForObject.time = seconds;
       contentForObject.content = fields.content;
       contentForArray.push(contentForObject);
@@ -117,6 +118,7 @@ module.exports = class Article {
       updateObj.time = seconds;
       updateObj.content = fields.content;
 
+
       // 修改圖片和影片
       if (files.image != null && files.video != null) {
         cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
@@ -127,18 +129,20 @@ module.exports = class Article {
           videoObj.link = resultVideoUrl.secure_url;
             articleSchemaModel.findOne({_id: fields.articleID})
               .then(doc => {
+                console.log(doc)
                 doc.listOfContent.push(updateObj);
                 doc.mediaLink.push(photoObj);
                 doc.mediaLink.push(videoObj);
+                if (fields.privacy != null)  doc.privacy = fields.privacy //文章權限
                 doc.save()
-                  .then(posts => {
-                    let result = {
-                      status: "圖片和影片修改成功",
-                      article: posts
-                    }
-                    res.json(result)
-                  })
-                  .catch(error => res.json(error));
+                .then(posts => {
+                  let result = {
+                    status: "圖片和影片修改成功",
+                    article: posts
+                  }
+                  res.json(result)
+                })
+                .catch(error => res.json(error));
               })
           }, {resource_type: "video"});
         }, {folder: 'Social_Media/mediaLink'});
@@ -152,7 +156,8 @@ module.exports = class Article {
           .then(doc => {
             doc.listOfContent.push(updateObj);
             doc.mediaLink.push(photoObj);
-          doc.save()
+            if (fields.privacy != null)  doc.privacy = fields.privacy //文章權限
+            doc.save()
             .then(posts => {
               let result = {
                 status: "圖片修改成功",
@@ -173,6 +178,7 @@ module.exports = class Article {
             .then(doc => {
               doc.listOfContent.push(updateObj);
               doc.mediaLink.push(videoObj);
+              if (fields.privacy != null)  doc.privacy = fields.privacy //文章權限
               doc.save()
                 .then(posts => {
                   let result = {
@@ -190,6 +196,7 @@ module.exports = class Article {
         articleSchemaModel.findOne({_id: fields.articleID})
           .then(doc => {
             doc.listOfContent.push(updateObj);
+            if (fields.privacy != null)  doc.privacy = fields.privacy //文章權限
             doc.save().then(value => {
               let result = {
                 status: "發文修改成功",
@@ -205,7 +212,7 @@ module.exports = class Article {
 
   async searchArticle(req, res, next) {
     let resultArray = []
-    let article = await articleSchemaModel.find({delete: false}).exec();
+    let article = await articleSchemaModel.find({delete: false, privacy: "public"}).exec();
     for(let i = 0; i <= article.length-1; i++){
       let commentOfArticle = await findComment(article[i].comment);
       let temp = [];
@@ -221,7 +228,7 @@ module.exports = class Article {
 
   async searchArticleByArticleID(req, res, next) {
     let articleArray = []
-    let articleOne = await articleSchemaModel.findOne({delete: false, _id: req.body.articleID}).exec()
+    let articleOne = await articleSchemaModel.findOne({delete: false, _id: req.body.articleID, privacy: "public"}).exec()
     articleArray.push(articleOne);
 
     let commentOfArticle = await findComment(articleOne.comment);
