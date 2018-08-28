@@ -244,9 +244,9 @@
   
     o userID: 使用者(註冊)ID
     
-    o	userName: test
+    o userName: test
     
-    o	aboutMe: Hello
+    o aboutMe: Hello
     
     o	colorOfTheme: Black
     
@@ -259,7 +259,7 @@
   
     o userID_following: 追蹤人的ID
     
-    o	userID_followed: 被追蹤的ID
+    o userID_followed: 被追蹤的ID
     
   ## API測試(23)-追蹤好友
   •	HTTP Method: PUT
@@ -270,7 +270,7 @@
   
     o userID_following: 追蹤人的ID
     
-    o	userID_followed: 被追蹤的ID(欲取消的追蹤人ID)
+    o userID_followed: 被追蹤的ID(欲取消的追蹤人ID)
     
    
 
