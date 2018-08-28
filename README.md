@@ -248,7 +248,7 @@
     
     o aboutMe: Hello
     
-    o	colorOfTheme: Black
+    o colorOfTheme: Black
     
  ## API測試(22)-追蹤好友
   •	HTTP Method: PUT
