@@ -65,7 +65,6 @@ module.exports = class Profile {
            .catch(error => console.log(error));
        }
        if (req.body.aboutMe != null) data.aboutMe = req.body.aboutMe //內文
-       //data.authorityOfArticle = req.body.authorityOfArticle //public or private
        if (req.body.colorOfTheme != null) data.colorOfTheme = req.body.colorOfTheme //主題顏色設定
        data.save()
         .then(doc => {
@@ -105,7 +104,7 @@ module.exports = class Profile {
     profileSchemaModel.findOne({userID: req.body.userID_following})   //追蹤的人
           .then(doc => {
             console.log(doc)
-            //確認是否已
+            //確認是否已追蹤
            if (doc.following.indexOf(req.body.userID_followed) == -1) doc.following.push(req.body.userID_followed)
             doc.save()
               .then(result => {
@@ -118,7 +117,6 @@ module.exports = class Profile {
               }
                 res.json(result)
           })
-
           .catch(error => {
             let result = {
               status: "追蹤失敗",

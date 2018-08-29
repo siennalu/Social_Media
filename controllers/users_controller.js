@@ -172,15 +172,15 @@ module.exports = class User {
                     }
                     res.json(result)
                   })
-                    .catch(error => {
-                     let result = {
-                          status: "更新失敗",
-                          err: "伺服器錯誤，請稍後再試"
-                        }
-                        res.json(error)
-                      })
-                    })
-                }
+                .catch(error => {
+                  let result = {
+                    status: "更新失敗",
+                    err: "伺服器錯誤，請稍後再試"
+                  }
+                    res.json(error)
+                })
+                })
+              }
             })
       }
   }

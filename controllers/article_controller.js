@@ -118,7 +118,6 @@ module.exports = class Article {
       updateObj.time = seconds;
       updateObj.content = fields.content;
 
-
       // 修改圖片和影片
       if (files.image != null && files.video != null) {
         cloudinary.uploader.upload(files.image.path, function (resultPhotoUrl) {
@@ -144,6 +143,7 @@ module.exports = class Article {
                 })
                 .catch(error => res.json(error));
               })
+              .catch(error => res.json(error));
           }, {resource_type: "video"});
         }, {folder: 'Social_Media/mediaLink'});
 
@@ -167,6 +167,7 @@ module.exports = class Article {
             })
             .catch(error => res.json(error));
           })
+          .catch(error => res.json(error));
         }, {folder: 'Social_Media/mediaLink'});
 
         //修改影片
@@ -189,6 +190,7 @@ module.exports = class Article {
                 })
                 .catch(error => res.json(error));
             })
+            .catch(error => res.json(error));
         }, {folder: 'Social_Media/mediaLink'});
 
         //修改文字
@@ -204,7 +206,7 @@ module.exports = class Article {
               }
               res.json(result);
             })
-              .catch(error => res.json(error));
+          .catch(error => res.json(error));
           })
       }
     })
@@ -247,13 +249,13 @@ module.exports = class Article {
           }
           res.json(result);
         })
-          .catch(error => {
-            let result = {
-              status: "刪除失敗",
-              err: "伺服器錯誤，請稍後再試"
-            }
+        .catch(error => {
+          let result = {
+            status: "刪除失敗",
+            err: "伺服器錯誤，請稍後再試"
+          }
             res.json(error)
-          })
+        })
       })
   }
 
@@ -269,13 +271,13 @@ module.exports = class Article {
           }
           res.json(result);
         })
-          .catch(error => {
-            let result = {
-              status: "按讚失敗",
-              err: "伺服器錯誤，請稍後再試"
-            }
-            res.json(error)
-          })
+        .catch(error => {
+          let result = {
+            status: "按讚失敗",
+            err: "伺服器錯誤，請稍後再試"
+          }
+          res.json(error)
+        })
       })
   }
 
