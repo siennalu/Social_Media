@@ -114,6 +114,7 @@ module.exports = class User {
                 result: {
                   status: "登入成功",
                   loginMember: "歡迎 " + foundUser.userName + " 的登入",
+                  userID: foundUser._id,
                   token: token
                 }
               })
