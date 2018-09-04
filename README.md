@@ -272,7 +272,28 @@
     
     o userID_followed: 被追蹤的ID(欲取消的追蹤人ID)
     
-   
+  ## API測試(24)-新增好友
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/friends_add     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID: 新增人的ID
+    
+    o userID_add: 被新增的ID(欲新增為好友的ID)
+    
+  ## API測試(25)-取消好友
+  •	HTTP Method: PUT
+  
+  •	URL: http://localhost:3000/friends_unadded     
+  
+  • Body(x-www-form-urlencoded):
+  
+    o userID: 取消人的ID
+    
+    o userID_add: 取消為好友的ID
+    
 
     
    
