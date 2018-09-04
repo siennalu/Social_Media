@@ -11,6 +11,7 @@ let articleSchema = new Schema({
   likes: Array,
   numberOfLikes: Number,
   comment: Array,
+  avatarLink:Array,
   mediaLink: Array,
   hashTags: Array,
   delete: Boolean

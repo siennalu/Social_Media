@@ -181,6 +181,16 @@ module.exports = class Profile {
           profileSchemaModel.findOne({userID: fields.userID})
             .then(data => {
               data.avatarLink = result.secure_url;
+            articleSchemaModel.findOne({authorID: fields.userID})
+              .then(doc =>{
+                doc.avatarLink = result.secure_url
+                doc.save()
+                  .then(result => {
+                    console.log("avatarLink saved to db ")
+                  })
+              })
+              .catch(error => console.log(error));
+
               data.save()
                 .then(value => {
                   let result = {

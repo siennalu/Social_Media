@@ -1,3 +1,4 @@
 # dotenv environment variables file
 .env
 .idea/workspace.xml
+node_modules
