@@ -19,7 +19,7 @@ module.exports = class Profile {
         data.totalOfFollowings = data.following.length
         data.totalOfFans = data.fans.length
         res.json(data)
-       })
+      })
       .catch(error => {
         let result = {
           status: "個人頁面搜尋失敗",
@@ -48,47 +48,47 @@ module.exports = class Profile {
   }
 
 
- profileSetting(req, res, next) {
-   profileSchemaModel.findOne({userID: req.body.userID})
-     .then(data => {
-       if (req.body.userName != null) {
-         data.userName = req.body.userName  //暱稱
-         userSchemaModel.findOne({_id: req.body.userID})
-           .then(doc => {
-             doc.userName = req.body.userName
-             doc.save()
-               .then (doc => {
+  profileSetting(req, res, next) {
+    profileSchemaModel.findOne({userID: req.body.userID})
+      .then(data => {
+        if (req.body.userName != null) {
+          data.userName = req.body.userName  //暱稱
+          userSchemaModel.findOne({_id: req.body.userID})
+            .then(doc => {
+              doc.userName = req.body.userName
+              doc.save()
+                .then(doc => {
                   console.log("modified")
-               })
-               .catch(error => console.log(error));
-           })
-           .catch(error => console.log(error));
-       }
-       if (req.body.aboutMe != null) data.aboutMe = req.body.aboutMe //內文
-       if (req.body.colorOfTheme != null) data.colorOfTheme = req.body.colorOfTheme //主題顏色設定
-       data.save()
-        .then(doc => {
-          let result = {
-            status: "個人頁面修改成功",
-            content: doc
-          }
-         res.json(result)
-        })
-        .catch(error => {
-          console.log(error)
-        })
-     })
-     .catch(error => {
-       let result = {
-         status: "個人頁面修改失敗",
-         err: "伺服器錯誤，請稍後再試"
-       }
-       res.json(error)
-     })
- }
+                })
+                .catch(error => console.log(error));
+            })
+            .catch(error => console.log(error));
+        }
+        if (req.body.aboutMe != null) data.aboutMe = req.body.aboutMe //內文
+        if (req.body.colorOfTheme != null) data.colorOfTheme = req.body.colorOfTheme //主題顏色設定
+        data.save()
+          .then(doc => {
+            let result = {
+              status: "個人頁面修改成功",
+              content: doc
+            }
+            res.json(result)
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      })
+      .catch(error => {
+        let result = {
+          status: "個人頁面修改失敗",
+          err: "伺服器錯誤，請稍後再試"
+        }
+        res.json(error)
+      })
+  }
 
 
-  friendsFollowing(req, res, next){
+  friendsFollowing(req, res, next) {
     profileSchemaModel.findOne({userID: req.body.userID_followed})  //被追蹤的人
       .then(data => {
         console.log(data)
@@ -102,28 +102,28 @@ module.exports = class Profile {
       })
       .catch(error => console.log(error));
     profileSchemaModel.findOne({userID: req.body.userID_following})   //追蹤的人
-          .then(doc => {
-            console.log(doc)
-            //確認是否已追蹤
-           if (doc.following.indexOf(req.body.userID_followed) == -1) doc.following.push(req.body.userID_followed)
-            doc.save()
-              .then(result => {
-                console.log("following created")
-              })
-              .catch(error => console.log(error));
-              let result = {
-                status: "追蹤成功",
-                content: doc
-              }
-                res.json(result)
+      .then(doc => {
+        console.log(doc)
+        //確認是否已追蹤
+        if (doc.following.indexOf(req.body.userID_followed) == -1) doc.following.push(req.body.userID_followed)
+        doc.save()
+          .then(result => {
+            console.log("following created")
           })
-          .catch(error => {
-            let result = {
-              status: "追蹤失敗",
-              err: "伺服器錯誤，請稍後再試"
-            }
-            res.json(error)
-          })
+          .catch(error => console.log(error));
+        let result = {
+          status: "追蹤成功",
+          content: doc
+        }
+        res.json(result)
+      })
+      .catch(error => {
+        let result = {
+          status: "追蹤失敗",
+          err: "伺服器錯誤，請稍後再試"
+        }
+        res.json(error)
+      })
   }
 
 
@@ -131,7 +131,7 @@ module.exports = class Profile {
     profileSchemaModel.findOne({userID: req.body.userID_followed})  //被追蹤的人
       .then(data_follow => {
         //確認是否已為粉絲
-        if (data_follow.fans.indexOf(req.body.userID_following) != -1)  data_follow.fans.splice(data_follow.fans.indexOf(req.body.userID_following),1)
+        if (data_follow.fans.indexOf(req.body.userID_following) != -1) data_follow.fans.splice(data_follow.fans.indexOf(req.body.userID_following), 1)
         data_follow.save()
           .then(value => {
             console.log("fans delete")
@@ -142,7 +142,7 @@ module.exports = class Profile {
     profileSchemaModel.findOne({userID: req.body.userID_following})   //追蹤的人
       .then(doc_follow => {
         //確認是否已追蹤
-        if (doc_follow.following.indexOf(req.body.userID_followed) != -1) doc_follow.following.splice(doc_follow.following.indexOf(req.body.userID_followed),1)
+        if (doc_follow.following.indexOf(req.body.userID_followed) != -1) doc_follow.following.splice(doc_follow.following.indexOf(req.body.userID_followed), 1)
         doc_follow.save()
           .then(result => {
             console.log("following delete")
@@ -181,15 +181,15 @@ module.exports = class Profile {
           profileSchemaModel.findOne({userID: fields.userID})
             .then(data => {
               data.avatarLink = result.secure_url;
-            articleSchemaModel.findOne({authorID: fields.userID})
-              .then(doc =>{
-                doc.avatarLink = result.secure_url
-                doc.save()
-                  .then(result => {
-                    console.log("avatarLink saved to db ")
-                  })
-              })
-              .catch(error => console.log(error));
+              articleSchemaModel.findOne({authorID: fields.userID})
+                .then(doc => {
+                  doc.avatarLink = result.secure_url
+                  doc.save()
+                    .then(result => {
+                      console.log("avatarLink saved to db ")
+                    })
+                })
+                .catch(error => console.log(error));
 
               data.save()
                 .then(value => {
@@ -257,5 +257,61 @@ module.exports = class Profile {
       }, {folder: 'Social_Media/backGroundPhoto'});
     })
   }
+
+
+  friendsAdd(req, res, next) {
+    profileSchemaModel.findOne({userID: req.body.userID})  // 自己
+      .then(data => {
+        console.log(data)
+        //確認是否已存在好友的ID
+        if (data.friends.indexOf(req.body.userID_add) == -1) data.friends.push(req.body.userID_add)
+        data.save()
+          .then(value => {
+            let result = {
+              status: "新增好友成功",
+              content: value
+            }
+            res.json(result)
+          })
+          .catch(error => {
+            let result = {
+              status: "新增好友失敗",
+              err: "伺服器錯誤，請稍後再試"
+            }
+            res.json(error)
+          })
+      })
+      .catch(error => console.log(error));
+  }
+
+  friendsUnadded(req, res, next){
+    profileSchemaModel.findOne({userID: req.body.userID})  // 自己
+      .then(data => {
+        //確認是否已為好友
+        if (data.friends.indexOf(req.body.userID_unadded) != -1) data.friends.splice(data.friends.indexOf(req.body.userID_unadded))
+        data.save()
+          .then(value => {
+            let result = {
+              status: "刪除好友成功",
+              content: value
+            }
+            res.json(result)
+          })
+          .catch(error => {
+            let result = {
+              status: "刪除好友失敗",
+              err: "伺服器錯誤，請稍後再試"
+            }
+            res.json(error)
+          })
+      })
+      .catch(error => console.log(error));
+  }
+
+
+
+
+
+
 }
 

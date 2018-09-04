@@ -11,6 +11,7 @@ let profileSchema = new Schema({
   totalOfFans: Number,
   following: Array,
   fans: Array,
+  friends: Array,
   avatarLink : String,
   backgroundLink: String,
 }, { versionKey: false });

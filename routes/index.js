@@ -56,5 +56,9 @@ router.put('/friends_following', profile.friendsFollowing); //追蹤
 
 router.put('/friends_unfollowing', profile.friendsUnfollowing); //取消追蹤
 
+router.put('/friends_add', profile.friendsAdd); //新增好友
+
+router.put('/friends_unadded', profile.friendsUnadded); //新增好友
+
 
 module.exports = router;
