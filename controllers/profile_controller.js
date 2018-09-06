@@ -88,43 +88,43 @@ module.exports = class Profile {
   }
 
 
-  friendsFollowing(req, res, next) {
-    profileSchemaModel.findOne({userID: req.body.userID_followed})  //被追蹤的人
-      .then(data => {
-        console.log(data)
-        //確認是否已存在ID
-        if (data.fans.indexOf(req.body.userID_following) == -1) data.fans.push(req.body.userID_following)
-        data.save()
-          .then(value => {
-            console.log("fans created")
-          })
-          .catch(error => console.log(error));
-      })
-      .catch(error => console.log(error));
-    profileSchemaModel.findOne({userID: req.body.userID_following})   //追蹤的人
-      .then(doc => {
-        console.log(doc)
-        //確認是否已追蹤
-        if (doc.following.indexOf(req.body.userID_followed) == -1) doc.following.push(req.body.userID_followed)
-        doc.save()
-          .then(result => {
-            console.log("following created")
-          })
-          .catch(error => console.log(error));
-        let result = {
-          status: "追蹤成功",
-          content: doc
-        }
-        res.json(result)
-      })
-      .catch(error => {
-        let result = {
-          status: "追蹤失敗",
-          err: "伺服器錯誤，請稍後再試"
-        }
-        res.json(error)
-      })
-  }
+  // friendsFollowing(req, res, next) {
+  //   profileSchemaModel.findOne({userID: req.body.userID_followed})  //被追蹤的人
+  //     .then(data => {
+  //       console.log(data)
+  //       //確認是否已存在ID
+  //       if (data.fans.indexOf(req.body.userID_following) == -1) data.fans.push(req.body.userID_following)
+  //       data.save()
+  //         .then(value => {
+  //           console.log("fans created")
+  //         })
+  //         .catch(error => console.log(error));
+  //     })
+  //     .catch(error => console.log(error));
+  //   profileSchemaModel.findOne({userID: req.body.userID_following})   //追蹤的人
+  //     .then(doc => {
+  //       console.log(doc)
+  //       //確認是否已追蹤
+  //       if (doc.following.indexOf(req.body.userID_followed) == -1) doc.following.push(req.body.userID_followed)
+  //       doc.save()
+  //         .then(result => {
+  //           console.log("following created")
+  //         })
+  //         .catch(error => console.log(error));
+  //       let result = {
+  //         status: "追蹤成功",
+  //         content: doc
+  //       }
+  //       res.json(result)
+  //     })
+  //     .catch(error => {
+  //       let result = {
+  //         status: "追蹤失敗",
+  //         err: "伺服器錯誤，請稍後再試"
+  //       }
+  //       res.json(error)
+  //     })
+  // }
 
 
   friendsUnfollowing(req, res, next) {
@@ -262,9 +262,21 @@ module.exports = class Profile {
   friendsAdd(req, res, next) {
     profileSchemaModel.findOne({userID: req.body.userID})  // 自己
       .then(data => {
-        console.log(data)
         //確認是否已存在好友的ID
         if (data.friends.indexOf(req.body.userID_add) == -1) data.friends.push(req.body.userID_add)
+        //加好友同時追蹤
+        if (data.following.indexOf(req.body.userID_add) == -1) data.following.push(req.body.userID_add)
+        profileSchemaModel.findOne({userID: req.body.userID_add})
+          .then(doc=> {
+            //確認是否已為粉絲
+            if (doc.fans.indexOf(req.body.userID) == -1) doc.fans.push(req.body.userID)
+            doc.save()
+              .then(value => {
+                console.log("fans added")
+              })
+              .catch(error => console.log(error));
+          })
+          .catch(error => console.log(error));
         data.save()
           .then(value => {
             let result = {

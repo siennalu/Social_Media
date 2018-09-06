@@ -52,7 +52,7 @@ router.post('/search_articleByUserID', profile.searchArticleByUserID); //get the
 
 router.put('/profile_setting', profile.profileSetting); //profile
 
-router.put('/friends_following', profile.friendsFollowing); //追蹤
+//router.put('/friends_following', profile.friendsFollowing); //追蹤
 
 router.put('/friends_unfollowing', profile.friendsUnfollowing); //取消追蹤
 
